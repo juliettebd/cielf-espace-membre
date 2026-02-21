@@ -1,0 +1,78 @@
+/* ── CIELF - Design centralisé ── */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --vert: #13686b;
+  --rouge: #861b3f;
+  --rouge-hover: #6b1532;
+  --pourpre: #ccadb5;
+  --jaune: #fafaf2;
+  --texte: #333333;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: var(--texte);
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+/* ── Conteneur principal ── */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* ── Titres ── */
+h1 { color: var(--vert); font-size: 32px; margin-bottom: 10px; }
+h2 { color: var(--vert); font-size: 20px; margin-top: 28px; margin-bottom: 8px; }
+h3 { color: var(--rouge); font-size: 15px; font-style: italic; margin-top: 6px; margin-bottom: 16px; }
+
+/* ── Bouton principal ── */
+.btn-principal {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--rouge);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.btn-principal:hover:not(:disabled) { background: var(--rouge-hover); }
+.btn-principal:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* ── Messages d'erreur ── */
+.erreur {
+  color: var(--rouge);
+  font-size: 14px;
+  margin-top: 8px;
+  display: none;
+}
+
+/* ── Loader ── */
+.loader {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--vert);
+  font-size: 18px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  h1 { font-size: 24px; }
+  .container { padding: 24px 16px; }
+}
