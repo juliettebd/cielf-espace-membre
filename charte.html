@@ -6,19 +6,11 @@
   <title>Charte CIELF</title>
   <link rel="stylesheet" href="css/cielf.css">
   <style>
-    /* Styles spécifiques à la page Charte */
-    .charte-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .charte-header p {
-      color: #666;
-      font-size: 16px;
-      margin-top: 8px;
-    }
+    .charte-header { text-align: center; margin-bottom: 32px; }
+    .charte-header p { color: #666; font-size: 16px; margin-top: 8px; }
     .charte-texte {
-      background: var(--jaune);
-      border-left: 4px solid var(--vert);
+      background: #fafaf2;
+      border-left: 4px solid #13686b;
       padding: 28px;
       border-radius: 8px;
       max-height: 480px;
@@ -27,9 +19,11 @@
       font-size: 15px;
       line-height: 1.7;
     }
+    .charte-texte h2 { color: #13686b; font-size: 20px; margin-top: 28px; margin-bottom: 8px; }
+    .charte-texte h3 { color: #861b3f; font-size: 15px; font-style: italic; margin-top: 6px; margin-bottom: 16px; }
     .charte-engagement {
       background: white;
-      border: 2px solid var(--vert);
+      border: 2px solid #13686b;
       border-radius: 8px;
       padding: 24px;
       margin-bottom: 24px;
@@ -47,21 +41,42 @@
       height: 20px;
       min-width: 20px;
       margin-top: 2px;
-      accent-color: var(--vert);
+      accent-color: #13686b;
       cursor: pointer;
+    }
+    .erreur { color: #861b3f; font-size: 14px; margin-top: 8px; display: none; }
+    .loader { text-align: center; padding: 60px 20px; color: #13686b; font-size: 18px; font-family: 'Nunito', sans-serif; }
+    .btn-principal {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: #861b3f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-principal:hover:not(:disabled) { background: #6b1532; }
+    .btn-principal:disabled { opacity: 0.7; cursor: not-allowed; }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; font-family: 'Nunito', sans-serif; color: #333; }
+    @media (max-width: 600px) {
+      .charte-texte { max-height: 350px; }
+      .container { padding: 24px 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Loader pendant la vérification Firebase -->
   <div class="loader" id="loader">Vérification en cours...</div>
 
-  <!-- Contenu principal (caché pendant le chargement) -->
   <div class="container" id="contenu" style="display:none;">
 
     <div class="charte-header">
-      <h1>La Charte CIELF</h1>
+      <h1 style="color:#13686b; font-size:32px; margin-bottom:10px;">La Charte CIELF</h1>
       <p>Bienvenue <strong id="prenom-membre"></strong> — avant d'accéder à la communauté,<br>
       prenez un moment pour lire et accepter notre Charte.</p>
     </div>
@@ -129,54 +144,63 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script src="js/firebase-config.js"></script>
 
   <script>
-    // ── Initialisation Firebase (version compat = pas de type module) ──
-    firebase.initializeApp(FIREBASE_CONFIG);
+    // ── Config Firebase (inline — protégée par restrictions de domaine) ──
+    var firebaseConfig = {
+      apiKey: "AIzaSyD7JCajQFLChA-1qa-_QfuadAeKlrb58ek",
+      authDomain: "cielf-membres.firebaseapp.com",
+      projectId: "cielf-membres",
+      storageBucket: "cielf-membres.firebasestorage.app",
+      messagingSenderId: "534062662676",
+      appId: "1:534062662676:web:eab7dbe36db86716195301"
+    };
+
+    // ── URLs ──
+    var URL_LOGIN = "https://www.cielf.com/membre-connexion";
+    var URL_ESPACE_MEMBRE = "https://www.cielf.com/espace-membre";
+
+    // ── Init Firebase ──
+    firebase.initializeApp(firebaseConfig);
     var auth = firebase.auth();
     var db = firebase.firestore();
-
     var currentUser = null;
 
     // ── Vérification Auth + Charte ──
     auth.onAuthStateChanged(function(user) {
       if (!user) {
-        window.location.href = URLS.login;
+        window.location.href = URL_LOGIN;
         return;
       }
 
       currentUser = user;
 
-      // Lire le doc membre dans Firestore (ID = UID)
       db.collection("members").doc(user.uid).get().then(function(doc) {
         if (!doc.exists) {
-          window.location.href = URLS.login;
+          window.location.href = URL_LOGIN;
           return;
         }
 
         var data = doc.data();
 
-        // Si charte déjà acceptée → redirect espace membre
+        // Charte déjà acceptée → espace membre
         if (data.charteAcceptee === true) {
-          window.location.href = URLS.espaceembre;
+          window.location.href = URL_ESPACE_MEMBRE;
           return;
         }
 
-        // Afficher le prénom
+        // Afficher prénom + contenu
         document.getElementById("prenom-membre").textContent = data.prenom || "";
-
-        // Cacher loader, afficher contenu
         document.getElementById("loader").style.display = "none";
         document.getElementById("contenu").style.display = "block";
 
       }).catch(function(err) {
         console.error("Erreur Firestore:", err);
-        window.location.href = URLS.login;
+        window.location.href = URL_LOGIN;
       });
     });
 
-    // ── Gestion du bouton ──
+    // ── Bouton accepter ──
     document.getElementById("btn-accepter").addEventListener("click", function() {
       var caseCharte = document.getElementById("case-charte");
       var msgErreur = document.getElementById("erreur-charte");
@@ -193,12 +217,11 @@
 
       var maintenant = new Date().toISOString();
 
-      // Mettre à jour Firestore
       db.collection("members").doc(currentUser.uid).update({
         charteAcceptee: true,
         charteDate: maintenant
       }).then(function() {
-        window.location.href = URLS.espaceembre;
+        window.location.href = URL_ESPACE_MEMBRE;
       }).catch(function(err) {
         console.error("Erreur:", err);
         btn.disabled = false;
