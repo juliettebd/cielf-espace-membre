@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charte CIELF</title>
+  <link rel="stylesheet" href="css/cielf.css">
+  <style>
+    /* Styles spécifiques à la page Charte */
+    .charte-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .charte-header p {
+      color: #666;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+    .charte-texte {
+      background: var(--jaune);
+      border-left: 4px solid var(--vert);
+      padding: 28px;
+      border-radius: 8px;
+      max-height: 480px;
+      overflow-y: scroll;
+      margin-bottom: 28px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .charte-engagement {
+      background: white;
+      border: 2px solid var(--vert);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .charte-engagement label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .charte-engagement input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 2px;
+      accent-color: var(--vert);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader pendant la vérification Firebase -->
+  <div class="loader" id="loader">Vérification en cours...</div>
+
+  <!-- Contenu principal (caché pendant le chargement) -->
+  <div class="container" id="contenu" style="display:none;">
+
+    <div class="charte-header">
+      <h1>La Charte CIELF</h1>
+      <p>Bienvenue <strong id="prenom-membre"></strong> — avant d'accéder à la communauté,<br>
+      prenez un moment pour lire et accepter notre Charte.</p>
+    </div>
+
+    <div class="charte-texte">
+      <p><em>CIELF est une communauté internationale d'entrepreneurs et de leaders francophones qui ont choisi l'exigence. Exigence de posture. Exigence de qualité. Exigence d'impact.</em></p>
+      <p>Nous croyons que la francophonie n'est pas seulement une langue commune. C'est une manière d'entreprendre : plus nuancée, plus relationnelle, plus humaniste, et profondément tournée vers le sens.</p>
+      <p>Cette charte garantit le cadre nécessaire à cette ambition.</p>
+
+      <h2>Article 1 — Respect et intelligence culturelle</h2>
+      <p>CIELF rassemble des entrepreneurs d'Europe, d'Afrique, d'Amérique du Nord et d'ailleurs. La diversité culturelle est une richesse. Elle exige : respect absolu des personnes, ouverture aux différences, écoute active, curiosité sincère.</p>
+      <p>Les désaccords sont permis. Les attaques personnelles, jugements, propos discriminatoires ou condescendants ne le sont pas.</p>
+      <h3>Nous cultivons la fermeté dans les idées et l'élégance dans les échanges.</h3>
+
+      <h2>Article 2 — Une posture entrepreneuriale mature</h2>
+      <p>CIELF n'est pas un espace de validation sociale. C'est un espace de croissance. Chaque membre s'engage à : prendre la responsabilité de ses propos, parler en son nom, contribuer de manière constructive, chercher l'élévation plutôt que la plainte.</p>
+      <h3>Nous favorisons une dynamique de progression, pas de victimisation.</h3>
+
+      <h2>Article 3 — Une communauté, pas une vitrine commerciale</h2>
+      <p>Sont interdits : autopromotion directe, autopromotion déguisée, démarchage privé ou public, récupération de contacts à des fins commerciales, redirection vers des groupes concurrents.</p>
+      <h3>La valeur précède la visibilité.</h3>
+
+      <h2>Article 4 — Confidentialité et sécurité internationale</h2>
+      <p>Ce qui est partagé dans la communauté reste dans la communauté. Aucun contenu ne peut être diffusé à l'extérieur sans accord explicite. Les données personnelles sont protégées conformément au RGPD et aux normes internationales équivalentes.</p>
+      <h3>Nous évoluons dans un cadre international, exigeant et sécurisé.</h3>
+
+      <h2>Article 5 — Neutralité et professionnalisme</h2>
+      <p>Les débats à caractère politique, religieux, idéologique ou militant ne sont pas autorisés. Notre unité repose sur l'entrepreneuriat, le leadership et l'impact.</p>
+      <h3>La francophonie est diverse.</h3>
+
+      <h2>Article 6 — Pertinence et contribution</h2>
+      <p>Les contenus partagés doivent concerner : la posture entrepreneuriale, le leadership, la stratégie, l'expansion internationale, la coopération francophone, l'intelligence collective. Chaque membre est invité à contribuer autant qu'il reçoit.</p>
+      <h3>CIELF existe par et pour ses membres.</h3>
+
+      <h2>Article 7 — Propriété intellectuelle</h2>
+      <p>Les contenus diffusés dans CIELF sont protégés. Toute reproduction, diffusion ou exploitation non autorisée est interdite.</p>
+      <h3>L'excellence suppose le respect du travail et de la création.</h3>
+
+      <h2>Article 8 — Responsabilité individuelle</h2>
+      <p>Chaque membre est juridiquement responsable de ses publications. Sont interdits : contenus illégaux, propos diffamatoires, atteintes à la vie privée, violation de droits d'auteur, contenus offensants ou inappropriés.</p>
+
+      <h2>Article 9 — Modération et exclusion</h2>
+      <p>En cas de non-respect grave ou répété de la Charte, l'exclusion peut être immédiate, sans remboursement des cotisations.</p>
+
+      <h2>Notre engagement commun</h2>
+      <p>En rejoignant CIELF, vous choisissez d'incarner une posture entrepreneuriale ambitieuse, de contribuer à l'excellence francophone internationale, de créer des ponts entre cultures.</p>
+      <p><strong>Ensemble, nous affirmons que la francophonie entrepreneuriale peut conjuguer performance, humanité et leadership éclairé.</strong></p>
+    </div>
+
+    <div class="charte-engagement">
+      <label>
+        <input type="checkbox" id="case-charte">
+        <span>J'ai lu et j'accepte la Charte CIELF dans son intégralité. Je m'engage à respecter ses principes en tant que membre de la communauté.</span>
+      </label>
+      <p class="erreur" id="erreur-charte">⚠️ Vous devez cocher cette case pour continuer.</p>
+    </div>
+
+    <button class="btn-principal" id="btn-accepter">
+      J'accepte la Charte CIELF
+    </button>
+
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    // ── Initialisation Firebase (version compat = pas de type module) ──
+    firebase.initializeApp(FIREBASE_CONFIG);
+    var auth = firebase.auth();
+    var db = firebase.firestore();
+
+    var currentUser = null;
+
+    // ── Vérification Auth + Charte ──
+    auth.onAuthStateChanged(function(user) {
+      if (!user) {
+        window.location.href = URLS.login;
+        return;
+      }
+
+      currentUser = user;
+
+      // Lire le doc membre dans Firestore (ID = UID)
+      db.collection("members").doc(user.uid).get().then(function(doc) {
+        if (!doc.exists) {
+          window.location.href = URLS.login;
+          return;
+        }
+
+        var data = doc.data();
+
+        // Si charte déjà acceptée → redirect espace membre
+        if (data.charteAcceptee === true) {
+          window.location.href = URLS.espaceembre;
+          return;
+        }
+
+        // Afficher le prénom
+        document.getElementById("prenom-membre").textContent = data.prenom || "";
+
+        // Cacher loader, afficher contenu
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("contenu").style.display = "block";
+
+      }).catch(function(err) {
+        console.error("Erreur Firestore:", err);
+        window.location.href = URLS.login;
+      });
+    });
+
+    // ── Gestion du bouton ──
+    document.getElementById("btn-accepter").addEventListener("click", function() {
+      var caseCharte = document.getElementById("case-charte");
+      var msgErreur = document.getElementById("erreur-charte");
+      var btn = document.getElementById("btn-accepter");
+
+      if (!caseCharte.checked) {
+        msgErreur.style.display = "block";
+        return;
+      }
+
+      msgErreur.style.display = "none";
+      btn.disabled = true;
+      btn.textContent = "Enregistrement...";
+
+      var maintenant = new Date().toISOString();
+
+      // Mettre à jour Firestore
+      db.collection("members").doc(currentUser.uid).update({
+        charteAcceptee: true,
+        charteDate: maintenant
+      }).then(function() {
+        window.location.href = URLS.espaceembre;
+      }).catch(function(err) {
+        console.error("Erreur:", err);
+        btn.disabled = false;
+        btn.textContent = "J'accepte la Charte CIELF";
+        alert("Une erreur s'est produite. Réessaie ou contacte contact@cielf.com");
+      });
+    });
+  </script>
+
+</body>
+</html>
